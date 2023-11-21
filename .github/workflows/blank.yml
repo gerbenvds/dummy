@@ -1,0 +1,25 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: helmfile/helmfile-action@v1.0.0
+      with:
+        helmfile-version: 'v0.150.0'
+        helm-version: 'v3.11.0'
+        helm-plugins: >
+          https://github.com/databus23/helm-diff,
+          https://github.com/jkroepke/helm-secrets
+        helmfile-args: apply --environment prod
